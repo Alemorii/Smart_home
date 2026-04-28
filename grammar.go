@@ -1,14 +1,15 @@
 /* un programa podria ser 
 if sensor_himo == on then 
 	altavoz_comedor.mensaje = "PELIGRO"
-
+comentarios no contemplados en gramatica
 */
+
+//producciones nt 
 <programa> -> <lista_instrucciones>
 
 <lista_instrucciones> -> <instruccion> | <instruccion> <lista_instrucciones>
 
-<instruccion> ->  
-	<bloque_when> 
+<instruccion> ->  <bloque_when> 
 	|<bloque_every>
 	|<bloque_if>
 	|<asignacion> 
@@ -16,10 +17,23 @@ if sensor_himo == on then
 <bloque_when> -> <when> <condicion> <do> <lista_acciones> <end> 
 
 <lista_acciones> -> <accion> | <accion> <lista_acciones>
-<accion> -> <asignacion> | <condicional> 
 
-<asignacion> -> <dispositivo> . <atributo>  = <valor> | <rango>
+<accion> -> <asignacion> | <condicion> 
 
+<asignacion> -> <dispositivo> . <atributo>  = <valor> 
+	|<dispositivo> . <atributo>  = <rango>
+
+<bloque_every> -> <tiempo> <do> <lista_acciones> <end> 
+
+<bloque_if> -> <if> <condicion> <then> <lista_acciones> <else> <lista_acciones> <end>
+
+
+
+//producciones directas 
 <do>-> DO | do 
 <when> -> WHEN| when 
 <end> -> END | end 
+<if> -> IF | if 
+<then> -> THEN | then 
+<else> -> ELSE | else 
+
