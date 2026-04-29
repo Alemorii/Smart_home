@@ -18,22 +18,46 @@ comentarios no contemplados en gramatica
 
 <lista_acciones> -> <accion> | <accion> <lista_acciones>
 
-<accion> -> <asignacion> | <condicion> 
+<accion> -> <asignacion> | <bloque_if> 
 
 <asignacion> -> <dispositivo> . <atributo>  = <valor> 
 	|<dispositivo> . <atributo>  = <rango>
 
-<bloque_every> -> <tiempo> <do> <lista_acciones> <end> 
+<bloque_every> -> <every> <tiempo> <do> <lista_acciones> <end> 
 
 <bloque_if> -> <if> <condicion> <then> <lista_acciones> <else> <lista_acciones> <end>
-
-
+	|<if> <condicion> <then> <lista_acciones> <end>
 
 //producciones directas 
+<dispositivo> -> foco_ 
+	|aire_
+	|persiana_
+	|cerradura_
+	|reloj_
+	|altavoz_ 
+	|alarma_
+
+<atributo> -> estado
+	|brillo 
+	|color 
+	|modo 
+	|temp_obj
+	|temp_act
+	|posicion 
+	|hora 
+	|fecha 
+	|volumen 
+	|mute 
+	|mensaje 
+	|email_notif 
+	|activada
+
+
 <do>-> DO | do 
 <when> -> WHEN| when 
 <end> -> END | end 
 <if> -> IF | if 
 <then> -> THEN | then 
 <else> -> ELSE | else 
+<every> -> EVERY| every
 
