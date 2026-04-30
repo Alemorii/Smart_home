@@ -16,6 +16,11 @@ comentarios no contemplados en gramatica
 
 <bloque_when> -> <when> <condicion> <do> <lista_acciones> <end> 
 
+<bloque_every> -> <every> <tiempo> <do> <lista_acciones> <end> 
+
+<bloque_if> ->	<if> <condicion> <then> <lista_acciones> <else> <lista_acciones> <end>
+    |<if> <condicion> <then> <lista_acciones> <end>
+
 <lista_acciones> -> <accion> | <accion> <lista_acciones>
 
 <accion> -> <asignacion> | <bloque_if> 
@@ -23,12 +28,22 @@ comentarios no contemplados en gramatica
 <asignacion> -> <dispositivo> . <atributo>  = <valor> 
 	|<dispositivo> . <atributo>  = <rango>
 
-<bloque_every> -> <every> <tiempo> <do> <lista_acciones> <end> 
+//<asignacion> -> ACTUADOR . ATRIBUTO = <valor> ??
 
-<bloque_if> -> <if> <condicion> <then> <lista_acciones> <else> <lista_acciones> <end>
-	|<if> <condicion> <then> <lista_acciones> <end>
 
 //producciones directas 
+<valor> ->  BOOL_ESTADO
+	| BOOL_SENSOR
+    | TEMPERATURA
+    | PORCENTAJE
+    | TIEMPO
+    | ILUMINANCIA
+    | HORA
+    | FECHA
+    | EMAIL
+    | TEXTO
+    | NOMBRE
+
 <dispositivo> -> foco_ 
 	|aire_
 	|persiana_
