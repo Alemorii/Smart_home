@@ -21,28 +21,25 @@ comentarios no contemplados en gramatica
 <bloque_if> ->	<if> <condicion> <then> <lista_acciones> <else> <lista_acciones> <end>
     |<if> <condicion> <then> <lista_acciones> <end>
 
-<lista_acciones> -> <accion> | <accion> <lista_acciones>
+<lista_acciones> -> <accion> | <accion> <lista_acciones> // condicionales a anidar
 
 <accion> -> <asignacion> | <bloque_if> 
 
-<asignacion> -> <dispositivo> . <atributo>  = <valor> 
+<asignacion> -> <dispositivo> . <atributo>  = <valor> //bindear cada actuador 
 	|<dispositivo> . <atributo>  = <rango>
-
-//<asignacion> -> ACTUADOR . ATRIBUTO = <valor> ??
-
 
 //producciones directas 
 <valor> ->  BOOL_ESTADO
 	| BOOL_SENSOR
-    | TEMPERATURA
-    | PORCENTAJE
-    | TIEMPO
-    | ILUMINANCIA
-    | HORA
-    | FECHA
-    | EMAIL
-    | TEXTO
-    | NOMBRE
+  | TEMPERATURA
+  | PORCENTAJE
+  | TIEMPO
+  | ILUMINANCIA
+  | HORA
+  | FECHA
+  | EMAIL
+  | TEXTO
+  | NOMBRE
 
 <dispositivo> -> foco_ 
 	|aire_
@@ -52,7 +49,7 @@ comentarios no contemplados en gramatica
 	|altavoz_ 
 	|alarma_
 
-<atributo> -> estado
+<asignacion> ->
 	|brillo 
 	|color 
 	|modo 
