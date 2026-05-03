@@ -1,9 +1,3 @@
-/* un programa podria ser 
-if sensor_humo == on then 
-	altavoz_comedor.mensaje = "PELIGRO"
-comentarios no contemplados en gramatica
-*/
-
 //producciones nt 
 <programa> -> <lista_instrucciones>
 
@@ -28,27 +22,37 @@ comentarios no contemplados en gramatica
 
  // <actuador> . <atributo>  = <valor> //bindear cada actuador 
 <asignacion> ->  
-	foco_.estado = Tk_bool | foco_.brillo = Tk_percent  | foco_.color = Tk_nombre
-	|aire_.estado = TK_bool | aire_.modo = Tk_discreto 	
-	|aire_.temp_obj = Tk_temp | aire.temp_act = Tk_temp //temp actual no deberia poder asignarse
-	|persiana_.posicion = Tk_percent
-	|cerradura_.estado = Tk_bool 
-	|reloj_.hora = Tk_time | reloj_.hora = Tk_fecha // reloj es de solo lectura asi que no deberia ser asignado
-	|altavoz_.volumen = Tk_percent | altavoz_.mute = Tk_Bool 
-	|altavoz_.mesaje = Tk_texto | altavoz_.email_notif = Tk_email 
-	|alarma_.estado = Tk_Bool | alarma.activada = Tk_Bool
+	<foco>.estado = TK_BOOL | <foco>.brillo = TK_PERCENT  | <foco>.color = TK_NOMBRE
+	|<aire>.estado = TK_BOOL | <aire>.modo = TK_DISCRETO 	
+	|<aire>.temp_obj = TK_TEMP 
+	|<persiana>.posicion = TK_PERCENT
+	|<cerradura>.estado = TK_BOOL 
+	|<altavoz>.volumen = TK_PERCENT | <altavoz>.mute = TK_BOOL 
+	|<altavoz>.mesaje = TK_TEXTO | <altavoz>.email_notif = TK_EMAIL 
+	|<alarma>.estado = TK_BOOL | <alarma>.activada = TK_BOOL
+
 
 // este seria el bloque if, condicion de sensores
 //<sensor> <evaluacion> <valor> 
 
-// duda clave : ya que el actuador reloj y temp_act son solo lectura los tratamos como sensores?
-<condicion> -> 
-	sensor_temp <comparacion> Tk_temp | sensor_humedad <comparacion> tk_temp <logico> <condicion>
-	|sensor_humedad <comparacion> Tk_lux |sensor_humedad <comparacion> Tk_lux <logico> <condicion>
-	|sensor_movimiento <comparacion> Tk_Bool | sensor_humedad <comparacion> Tk_lux <condicion>
-	|sensor_humo <comparacion> Tk_Bool | sensor_humedad <comparacion> Tk_lux <condicion>
+<condicion> -> <comp_sensor>
+    | <comp_actuador>
+    | <condicion> <logico> <condicion>
+    | NOT <condicion>
+
+<comp_sensor> -> sensor_temp <comparacion> TK_TEMP
+    | sensor_humedad <comparacion> TK_PERCENT
+    | sensor_luz <comparacion> TK_LUX
+    | sensor_movimiento <comparacion> TK_BOOL
+    | sensor_humo <comparacion> TK_BOOL
+
+<comp_actuador> -> <reloj> . hora <comparacion> TK_TIME
+    | <alarma> . estado <comparacion> TK_BOOL
+    | <aire> . estado <comparacion> TK_BOOL
+    | <aire> . temp_act <comparacion> TK_TEMP
 
 //producciones directas 
+//consideramos las palabras reservadas como parte de la gramatica
 <do>-> DO | do 
 <when> -> WHEN| when 
 <end> -> END | end 
@@ -58,6 +62,15 @@ comentarios no contemplados en gramatica
 <every> -> EVERY| every
 
 <comparacion> -> == |  != | < | > | >= | <= 
-<condicion> -> AND | OR | NOT 
+<logico> -> AND | OR 
+
+<foco> -> foco_ TK_NOMBRE
+<aire> -> aire_ TK_NOMBRE
+<persiana> -> persiana_ TK_NOMBRE
+<cerradura> -> cerradura_ TK_NOMBRE
+<reloj> -> reloj_ TK_NOMBRE
+<altavoz> -> altavoz_ TK_NOMBRE
+<alarma> -> alarma_ TK_NOMBRE
+
 
 
