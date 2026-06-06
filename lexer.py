@@ -21,7 +21,7 @@ tokens = (
     # valores
     'BOOL', 'DISCRETO', 'NOMBRE',
     'PERCENT', 'TEMP', 'LUX', 'TIME',
-    'EMAIL', 'TEXTO', 'TIEMPO',
+    'EMAIL', 'TEXTO', 'TIEMPO','FECHA',
 )
 
 # expresiones regulares de simbolos
@@ -196,7 +196,7 @@ def t_BOOL(t):
     return t
 
 def t_DISCRETO(t):
-    r'frio\b|calor\b|ventilacion\b'
+    r'FRIO\b|CALOR\b|VENT\b|frio\b|calor\b|vent\b'
     return t
 
 def t_EMAIL(t):
@@ -207,20 +207,20 @@ def t_TEMP(t):
     r'-?[0-9]+(\.[0-9]+)?°[CF]'
     return t
 
-def t_TIEMPO(t):
-    r'[0-9]+(seg|min|hs)'
+def t_TIEMPO(t):# tiempo que usa el every distinto del time 
+    r'[0-9]+(seg|min|hs|s|m|h)'
     return t
 
-def t_TIME(t):
+def t_TIME(t): #formato de hora del dia por ejemplo reloj.hora > 22:00
     r'[0-2][0-9]:[0-5][0-9]'
     return t
 
 def t_LUX(t):
-    r'[0-9]+(\.[0-9]+)?lux'
+    r'(1000|[1-9][0-9]{0,2}|0)lux' # lux de 0 a 1000 sin decimales
     return t
 
 def t_PERCENT(t):
-    r'[0-9]{1,3}%'
+    r'(100|[0-9]{1,2})%'
     t.value = int(t.value[:-1])
     return t
 
