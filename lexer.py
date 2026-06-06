@@ -187,6 +187,10 @@ def t_HORA(t):
 
 # expresiones regulares compuestas
 
+def t_FECHA(t):
+    r'(0[1-9]|1[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/(19[0-9][0-9]|20[0-9][0-9])'
+    return t
+
 def t_BOOL(t):
     r'true\b|false\b|on\b|off\b|TRUE\b|FALSE\b|ON\b|OFF\b'
     return t
@@ -196,7 +200,7 @@ def t_DISCRETO(t):
     return t
 
 def t_EMAIL(t):
-    r'[a-zA-Z0-9._+-]+@[a-zA-Z0-9._+-]+\.[a-zA-Z]{2,4}'  # sacás las comillas
+    r'[a-zA-Z0-9._+-]+@[a-zA-Z0-9._+-]+\.[a-zA-Z]{2,4}'  
     return t
 
 def t_TEMP(t):
@@ -259,10 +263,11 @@ def procesar_archivo(file_name):  # lee archivo y muestra tokens
 program = True
 if __name__ == "__main__":
     while program == True:
-        print("\n -- Bienvenidx al analizador lexico--")
+        print("\n -- Bienvenido al analizador lexico--")
         print("1. Procesar archivo en la carpeta actual")
         print("2. procesar tokens de texto")
         print("3. Salir")
+        print("recuerde que el archivo de texto debe estar en la carpeta actual")
         print('-' * 40)
 
         choice = input("Elige una opcion (1,2,3) :")
