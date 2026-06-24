@@ -20,7 +20,7 @@ def p_instruccion(p):
                    | bloque_every 
                    | bloque_if 
                    | asignacion'''
-    p[0] = (p[1],p[2],p[3],p[4])
+    p[0] = p[1]
 
 def p_bloque_when(p):
     'bloque_when : WHEN condicion DO lista_acciones END'
