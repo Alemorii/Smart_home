@@ -200,12 +200,13 @@ if __name__ == "__main__":
     while program == True:
         print("\n -- Bienvenido al analizador lexico--")
         print("1. Selecionar archivo a parsear")
-        print("2. procesar tokens de texto")
-        print("3. Salir")
+        print("2. Parsear por consola")
+        print("3. Lexico por consola")
+        print("4. Salir")
         print("recuerde que el archivo de texto debe estar en la carpeta actual")
         print('-' * 40)
 
-        choice = input("Elige una opcion (1,2,3) :")
+        choice = input("Elige una opcion (1,2,3,4) :")
 
         match choice:
             case "1":
@@ -307,4 +308,11 @@ if __name__ == "__main__":
                     print(f"HTML de errores generado (con estado parcial): {output}")
 
             case "3":
+                data = input("ingrese texto a tokenizar :\n ")
+                lexer.input(data)
+                for tok in lexer:
+                    print(tok)
+                print("analisis lexico completo")
+
+            case "4":
                 sys.exit()

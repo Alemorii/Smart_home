@@ -202,8 +202,8 @@ def t_DISCRETO(t):
     r'FRIO\b|CALOR\b|VENT\b|frio\b|calor\b|vent\b'
     return t
 
-def t_CORREO(t):
-    r'[a-zA-Z0-9._+-]+@[a-zA-Z0-9._+-]+\.[a-zA-Z]{2,4}'  
+def tCORREO(t):
+    r'[a-zA-Z0-9.+-]+@[a-zA-Z0-9._+-]+.[a-zA-Z]{2,4}?(.[a-zA-Z]{2,4})' 
     return t
 
 def t_TEMP(t):
@@ -215,7 +215,7 @@ def t_TIEMPO(t):# tiempo que usa el every distinto del time
     return t
 
 def t_TIME(t): #formato de hora del dia por ejemplo reloj.hora > 22:00
-    r'[0-2][0-9]:[0-5][0-9]'
+    r'([0-1][0-9]|2[0-3]):[0-5][0-9]'
     return t
 
 def t_LUX(t):
