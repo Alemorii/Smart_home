@@ -203,7 +203,7 @@ def t_DISCRETO(t):
     return t
 
 def tCORREO(t):
-    r'[a-zA-Z0-9.+-]+@[a-zA-Z0-9._+-]+.[a-zA-Z]{2,4}?(.[a-zA-Z]{2,4})' 
+    r'[a-zA-Z0-9.+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}(.[a-zA-Z]{2,4})?'
     return t
 
 def t_TEMP(t):
