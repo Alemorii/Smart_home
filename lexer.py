@@ -16,12 +16,12 @@ tokens = (
     # atributos
     'ESTADO', 'BRILLO', 'COLOR', 'MODO',
     'TEMP_OBJ', 'TEMP_ACT', 'POSICION',
-    'VOLUMEN', 'MUTE', 'MENSAJE', 'EMAIL_NOTIF',
-    'ACTIVADA', 'HORA',
+    'VOLUMEN', 'MUTE', 'MENSAJE', 'EMAIL',
+    'ACTIVADA', 'HORA', 'FECHA',
     # valores
     'BOOL', 'DISCRETO', 'NOMBRE',
     'PERCENT', 'TEMP', 'LUX', 'TIME',
-    'EMAIL', 'TEXTO', 'TIEMPO','FECHA',
+    'CORREO', 'TEXTO', 'TIEMPO','DATE',
 )
 
 # expresiones regulares de simbolos
@@ -141,8 +141,8 @@ def t_TEMP_ACT(t):
     r'temp_act\b'
     return t
 
-def t_EMAIL_NOTIF(t):
-    r'email_notif\b'
+def t_EMAIL(t):
+    r'email\b'
     return t
 
 def t_ESTADO(t):
@@ -185,9 +185,12 @@ def t_HORA(t):
     r'hora\b'
     return t
 
+def t_FECHA(t):
+    r'fecha\b'
+    return t
 # expresiones regulares compuestas
 
-def t_FECHA(t):
+def t_DATE(t):
     r'(0[1-9]|1[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/(19[0-9][0-9]|20[0-9][0-9])'
     return t
 
@@ -199,7 +202,7 @@ def t_DISCRETO(t):
     r'FRIO\b|CALOR\b|VENT\b|frio\b|calor\b|vent\b'
     return t
 
-def t_EMAIL(t):
+def t_CORREO(t):
     r'[a-zA-Z0-9._+-]+@[a-zA-Z0-9._+-]+\.[a-zA-Z]{2,4}'  
     return t
 
@@ -237,50 +240,20 @@ def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
 
+lexer_errors = []
+
 def t_error(t):
-    print(f"Carácter ilegal '{t.value[0]}' en línea {t.lexer.lineno}")
+    lexer_errors.append({
+        "tipo": "Léxico",
+        "linea": t.lexer.lineno,
+        "lexema": t.value[0],
+        "mensaje": f"Carácter ilegal '{t.value[0]}'"
+    })
+
     t.lexer.skip(1)
+    
+# def t_error(t):
+#     print(f"Carácter ilegal '{t.value[0]}' en línea {t.lexer.lineno}")
+#     t.lexer.skip(1)
 
 lexer = lex.lex()
-
-# logica de usuario
-
-def procesar_archivo(file_name):  # lee archivo y muestra tokens
-    try:
-        with open(file_name, 'r', encoding='utf-8')as f:
-            data = f.read()
-
-        lexer.input(data)
-
-        print(f"\n--- Analizando archivo: {file_name} ---")
-        for tok in lexer:
-            print(tok)
-        print("Análisis léxico completo.")
-    except FileNotFoundError:
-        print("error, archivo no encontrado")
-
-
-program = True
-if __name__ == "__main__":
-    while program == True:
-        print("\n -- Bienvenido al analizador lexico--")
-        print("1. Procesar archivo en la carpeta actual")
-        print("2. procesar tokens de texto")
-        print("3. Salir")
-        print("recuerde que el archivo de texto debe estar en la carpeta actual")
-        print('-' * 40)
-
-        choice = input("Elige una opcion (1,2,3) :")
-
-        match choice:
-            case "1":
-                file_name = input("introduzca el nombre del archivo :")
-                procesar_archivo(file_name)
-            case "2":
-                data = input("ingrese texto a tokenizar :\n ")
-                lexer.input(data)
-                for tok in lexer:
-                    print(tok)
-                print("analisis lexico completo")
-            case "3":
-                sys.exit()
