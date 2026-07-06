@@ -202,7 +202,7 @@ def t_DISCRETO(t):
     r'FRIO\b|CALOR\b|VENT\b|frio\b|calor\b|vent\b'
     return t
 
-def tCORREO(t):
+def t_CORREO(t):
     r'[a-zA-Z0-9.+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}(.[a-zA-Z]{2,4})?'
     return t
 
