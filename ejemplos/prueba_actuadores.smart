@@ -1,0 +1,22 @@
+WHEN sensor_luz < 250lux DO
+
+    IF persiana_sala.posicion > 50% THEN
+        foco_entrada.estado = ON
+    END 
+
+    IF foco_entrada.estado == ON THEN
+        foco_entrada.estado = ON
+        aire_acondicionado.temp_act = 22°C
+    END 
+
+    IF altavoz_cocina.volumen > 60% THEN
+        foco_entrada.estado = ON
+        aire_acondicionado.temp_obj = -10°C
+    END 
+
+    IF foco_cocina.color == rojo THEN
+        foco_entrada.estado = ON
+        aire_acondicionado.temp_obj = 22°C
+    END
+
+END

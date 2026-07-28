@@ -78,7 +78,7 @@ def p_asignacion_foco_brillo(p):
     p[0] = ('asign', p[1], 'brillo', p[5])
 
 def p_asignacion_foco_color(p):
-    'asignacion : FOCO PUNTO COLOR ASIGNACION NOMBRE'
+    'asignacion : FOCO PUNTO COLOR ASIGNACION RANG_COLOR'
 
     builder.actuador(p[1])
     builder.atributo(p[1], 'color', p[5])
@@ -207,9 +207,21 @@ def p_comp_sensor(p):
 def p_comp_actuador(p):
     '''comp_actuador : RELOJ PUNTO HORA comparacion TIME
                     | RELOJ PUNTO FECHA comparacion DATE
+                    | FOCO PUNTO ESTADO comp_bool BOOL
+                    | FOCO PUNTO BRILLO comparacion PERCENT
+                    | FOCO PUNTO COLOR comp_bool RANG_COLOR
+                    | PERSIANA PUNTO POSICION comparacion PERCENT
+                    | CERRADURA PUNTO ESTADO comp_bool BOOL
+                    | ALTAVOZ PUNTO VOLUMEN comparacion PERCENT
+                    | ALTAVOZ PUNTO MUTE comp_bool BOOL
+                    | ALTAVOZ PUNTO MENSAJE comp_bool TEXTO
+                    | ALTAVOZ PUNTO EMAIL comp_bool CORREO
                     | ALARMA PUNTO ESTADO comp_bool BOOL
+                    | ALARMA PUNTO ACTIVADA comp_bool BOOL
                     | AIRE PUNTO ESTADO comp_bool BOOL
                     | AIRE PUNTO TEMP_ACT comparacion TEMP
+                    | AIRE PUNTO TEMP_OBJ comparacion TEMP
+                    | AIRE PUNTO MODO comp_bool DISCRETO
     '''
     builder.actuador(p[1])
     builder.atributo(p[1], p[3], p[5])

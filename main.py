@@ -1,10 +1,21 @@
 import os
+import webbrowser
 
 from lexer import lexer, lexer_errors
 from parser import parser, parser_errors, builder
 from html_generator import generate_error_html
 
 import sys
+
+
+def abrir_html(output_path):
+    """
+    Abre el HTML generado en el navegador por defecto del sistema.
+    """
+    try:
+        webbrowser.open(f"file://{os.path.abspath(output_path)}", new=2)
+    except Exception as e:
+        print(f"No se pudo abrir el navegador automáticamente ({e}).")
 
 
 def elegir_archivo():
@@ -114,6 +125,7 @@ def procesar_archivo(file_name):
         output = file_name.replace(".smart", "_error.html")
 
         generate_error_html(errors, output)
+        abrir_html(output)
 
         return None
 
@@ -231,6 +243,7 @@ if __name__ == "__main__":
                     }]
 
                     generate_error_html(errors, "error.html")
+                    abrir_html("error.html")
                     continue
 
                 if not file_name.lower().endswith(".smart"):
@@ -244,6 +257,7 @@ if __name__ == "__main__":
 
                     output = file_name.rsplit(".", 1)[0] + "_error.html"
                     generate_error_html(errors, output)
+                    abrir_html(output)
 
                     continue
 
@@ -261,6 +275,7 @@ if __name__ == "__main__":
                         f.write("\n".join(result["data"]["html"]))
 
                     print("HTML generado correctamente.")
+                    abrir_html(output)
 
                 else:
 
@@ -275,6 +290,7 @@ if __name__ == "__main__":
                     )
 
                     print("Se generó el HTML con el estado parcial y los errores encontrados.")
+                    abrir_html(output)
 
                 print ("Resultado del parser:", result)
 
@@ -291,6 +307,7 @@ if __name__ == "__main__":
                         f.write("\n".join(result["data"]["html"]))
 
                     print(f"HTML generado correctamente: {output}")
+                    abrir_html(output)
 
                 else:
 
@@ -306,6 +323,7 @@ if __name__ == "__main__":
 
                     print(f"Se encontraron {len(result['errors'])} errores.")
                     print(f"HTML de errores generado (con estado parcial): {output}")
+                    abrir_html(output)
 
             case "3":
                 data = input("ingrese texto a tokenizar :\n ")

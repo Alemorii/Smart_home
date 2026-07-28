@@ -1,0 +1,46 @@
+// Automatización de iluminación
+
+WHEN sensor_luz < 250lux DO
+
+    foco_entrada.estado = ON
+    foco_entrada.brillo = 80%
+    foco_entrada.color = WHITE
+
+    foco_patio.estado = ON
+    foco_patio.brillo = 60%
+    foco_patio.color = BLUE
+
+END
+
+// Climatización
+
+WHEN sensor_movimiento == TRUE DO
+
+    IF sensor_temp > 26°C THEN
+
+        aire_acondicionado.estado = ON
+        aire_acondicionado.modo = FRIO
+        aire_acondicionado.temp_obj = 22°C
+
+    ELSE
+
+        aire_acondicionado.estado = OFF
+    END
+
+    IF reloj_home.hora > 22:00 AND alarma_home.estado == OFF THEN 
+        persiana_sala.posicion = 0%
+    END 
+
+END
+
+// Seguridad
+
+WHEN sensor_humo == TRUE DO
+
+    foco_entrada.estado = ON
+    alarma_entrada.estado = ON
+
+    altavoz_comedor.mensaje = "PELIGRO.HUMO DETECTADO"
+    altavoz_comedor.email = bomberos@smart-home.com
+    // alarma.estado = ON
+END

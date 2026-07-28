@@ -22,6 +22,7 @@ tokens = (
     'BOOL', 'DISCRETO', 'NOMBRE',
     'PERCENT', 'TEMP', 'LUX', 'TIME',
     'CORREO', 'TEXTO', 'TIEMPO','DATE',
+    'RANG_COLOR'
 )
 
 # expresiones regulares de simbolos
@@ -190,6 +191,10 @@ def t_FECHA(t):
     return t
 # expresiones regulares compuestas
 
+def t_RANG_COLOR(t):
+    r'blanco\b|rojo\b|azul\b|BLANCO\b|ROJO\b|AZUL\b'
+    return t
+
 def t_DATE(t):
     r'(0[1-9]|1[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/(19[0-9][0-9]|20[0-9][0-9])'
     return t
@@ -203,11 +208,23 @@ def t_DISCRETO(t):
     return t
 
 def t_CORREO(t):
-    r'[a-zA-Z0-9.+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}(.[a-zA-Z]{2,4})?'
+    r'[a-zA-Z0-9._+-]+@[a-zA-Z0-9._+-]+\.[a-zA-Z]{2,4}(.[a-zA-Z]{2,4})?'  
     return t
 
 def t_TEMP(t):
     r'-?[0-9]+(\.[0-9]+)?°[CF]'
+
+    valor = float(t.value[:-2]) 
+
+    if valor < -10 or valor > 56: 
+        lexer_errors.append({
+            "tipo": "Léxico",
+            "linea": t.lexer.lineno,
+            "lexema": t.value,
+            "mensaje": f"Temperatura fuera del rango permitido (-10°C a 56°C)"
+        })
+        return None
+    
     return t
 
 def t_TIEMPO(t):# tiempo que usa el every distinto del time 
